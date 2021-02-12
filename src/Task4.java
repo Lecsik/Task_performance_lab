@@ -10,8 +10,8 @@ import java.util.List;
 
 
 class InterTime {
-    public Date x;
-    public Date y;
+    public final Date x;
+    public final Date y;
 
     InterTime(Date x, Date y) {
         this.x = x;
@@ -25,49 +25,49 @@ public class Task4 {
         DateFormat format = new SimpleDateFormat("HH:mm");
         if (Files.exists(path)) {
             //заполнение листа строк из файла
-            List<String> TimeString = Files.readAllLines(path);
-            List<InterTime> TimeFinal = new ArrayList<>();
-            int[] Clients = new int[1440];
-            ArrayList<Integer> MaxCountCients = new ArrayList<>();
+            List<String> inputTimeString = Files.readAllLines(path);
+            List<InterTime> inputTimeFinal = new ArrayList<>();
+            int[] clients = new int[1440];
+            ArrayList<Integer> maxCountCients;
 
-            ArrayList<InterTime> FinalIntervalMaxClient = new ArrayList<>();
-            //заполнение листа TimeFinal из листа строк
-            for (String s : TimeString) {
+            ArrayList<InterTime> finalIntervalMaxClient = new ArrayList<>();
+            //заполнение листа inputTimeFinal из листа строк
+            for (String s : inputTimeString) {
                 String[] subStr;
                 String delimeter = " ";
                 subStr = s.split(delimeter);
                 try {
-                    TimeFinal.add(new InterTime(format.parse(subStr[0]), format.parse(subStr[1])));
+                    inputTimeFinal.add(new InterTime(format.parse(subStr[0]), format.parse(subStr[1])));
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
             }
             //формирование массива заполнености банка в каждую минуту времени
-            for (int i = 0; i < Clients.length; i++) {
-                for (InterTime p : TimeFinal) {
+            for (int i = 0; i < clients.length; i++) {
+                for (InterTime p : inputTimeFinal) {
 
                     if (i >= toMinute(p.x) && i < toMinute(p.y))
-                        Clients[i] += 1;
+                        clients[i] += 1;
                 }
             }
             //Заполнение листа минут, в течении которых было максимальное количество посетителей
-            MaxCountCients = MaxInd(Clients);
+            maxCountCients = maxInd(clients);
 
             // выделение интервалов времени,  в течении которых было максимальное количество посетителей
-            int FinalIntervalMaxClientIndex = MaxCountCients.get(0);
-            int previous = FinalIntervalMaxClientIndex;
-            for (int i = 1; i < MaxCountCients.size(); i++) {
-                int current = MaxCountCients.get(i);
+            int finalIntervalMaxClientFirst = maxCountCients.get(0);
+            int previous = finalIntervalMaxClientFirst;
+            for (int i = 1; i < maxCountCients.size(); i++) {
+                int current = maxCountCients.get(i);
                 if (current - previous > 1) {
                     try {
-                        FinalIntervalMaxClient.add(new InterTime(
-                                format.parse(toHours(FinalIntervalMaxClientIndex)),
+                        finalIntervalMaxClient.add(new InterTime(
+                                format.parse(toHours(finalIntervalMaxClientFirst)),
                                 format.parse(toHours(previous + 1))
                         ));
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
-                    FinalIntervalMaxClientIndex = current;
+                    finalIntervalMaxClientFirst = current;
                 }
 
                 previous = current;
@@ -75,16 +75,16 @@ public class Task4 {
             }
 
             try {
-                FinalIntervalMaxClient.add(new InterTime(
-                        format.parse(toHours(FinalIntervalMaxClientIndex)),
-                        format.parse(toHours(MaxCountCients.get(MaxCountCients.size() - 1) + 1))
+                finalIntervalMaxClient.add(new InterTime(
+                        format.parse(toHours(finalIntervalMaxClientFirst)),
+                        format.parse(toHours(maxCountCients.get(maxCountCients.size() - 1) + 1))
                 ));
             } catch (ParseException e) {
                 e.printStackTrace();
             }
 
 //вывод
-            for (InterTime i : FinalIntervalMaxClient) {
+            for (InterTime i : finalIntervalMaxClient) {
                 System.out.println(format.format(i.x) + " " + format.format(i.y));
             }
 
@@ -95,31 +95,30 @@ public class Task4 {
     public static int toMinute(Date HandM) {
         DateFormat formatH = new SimpleDateFormat("HH");
         DateFormat formatm = new SimpleDateFormat("mm");
-        int m = Integer.parseInt(formatH.format(HandM)) * 60 + Integer.parseInt(formatm.format(HandM));
-        return m;
+        return Integer.parseInt(formatH.format(HandM)) * 60 + Integer.parseInt(formatm.format(HandM));
     }
 
     public static String toHours(int m) {
         long
                 hour = m / 60,
-                min = m / 1 % 60;
+                min = m % 60;
         return String.format("%02d:%02d", hour, min);
 
     }
 
-    public static ArrayList<Integer> MaxInd(int[] a) {
+    public static ArrayList<Integer> maxInd(int[] a) {
         int max = 0;
-        ArrayList<Integer> MaxIndex = new ArrayList<>();
-        for (int i = 0; i < a.length; i++) {
-            if (a[i] > max) {
-                max = a[i];
+        ArrayList<Integer> maxIndex = new ArrayList<>();
+        for (int value : a) {
+            if (value > max) {
+                max = value;
             }
         }
         for (int i = 0; i < a.length; i++) {
             if (a[i] == max)
-                MaxIndex.add(i);
+                maxIndex.add(i);
         }
-        return MaxIndex;
+        return maxIndex;
     }
 
 

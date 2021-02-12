@@ -19,12 +19,12 @@ public class Task3 {
             List<String> list3 = Files.readAllLines(path3);
             List<String> list4 = Files.readAllLines(path4);
             List<String> list5 = Files.readAllLines(path5);
-            ArrayList<Float> list1final = new ArrayList<Float>();
-            ArrayList<Float> list2final = new ArrayList<Float>();
-            ArrayList<Float> list3final = new ArrayList<Float>();
-            ArrayList<Float> list4final = new ArrayList<Float>();
-            ArrayList<Float> list5final = new ArrayList<Float>();
-            ArrayList<Float> SumInterv = new ArrayList<Float>();
+            ArrayList<Float> list1final = new ArrayList<>();
+            ArrayList<Float> list2final = new ArrayList<>();
+            ArrayList<Float> list3final = new ArrayList<>();
+            ArrayList<Float> list4final = new ArrayList<>();
+            ArrayList<Float> list5final = new ArrayList<>();
+            ArrayList<Float> sumInterv = new ArrayList<>();
             int maxInd = -1;
             float max = 0;
             for (int i = 0; i < list1.size(); i++) {
@@ -35,11 +35,11 @@ public class Task3 {
                 list5final.add(Float.parseFloat(list5.get(i)));
             }
             for (int i = 0; i < list1.size(); i++) {
-                SumInterv.add(i, (list1final.get(i) + list2final.get(i) + list3final.get(i) + list4final.get(i) + list5final.get(i)));
+                sumInterv.add(i, (list1final.get(i) + list2final.get(i) + list3final.get(i) + list4final.get(i) + list5final.get(i)));
             }
-            for (int i = 0; i < SumInterv.size(); i++) {
-                if (SumInterv.get(i) > max) {
-                    max = SumInterv.get(i);
+            for (int i = 0; i < sumInterv.size(); i++) {
+                if (sumInterv.get(i) > max) {
+                    max = sumInterv.get(i);
                     maxInd = i;
                 }
             }

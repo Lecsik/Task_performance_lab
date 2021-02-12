@@ -13,7 +13,7 @@ public class Task1 {
 
         if (Files.exists(path)) {
             List<String> list2 = Files.readAllLines(path);
-            ArrayList<Short> listfinal = new ArrayList<Short>();
+            ArrayList<Short> listfinal = new ArrayList<>();
             for (String s : list2) {
                 listfinal.add(Short.parseShort(s));
             }
@@ -31,14 +31,14 @@ public class Task1 {
     }
 
     public static double percentile90(ArrayList<Short> list) {
-        list.sort(Comparator.<Short>naturalOrder());
+        list.sort(Comparator.naturalOrder());
         int index = (int) Math.ceil(((double) 90 / (double) 100) * (double) list.size());
         return list.get(index - 1);
     }
 
     public static double mediana(ArrayList<Short> list) {
-        list.sort(Comparator.<Short>reverseOrder());
-        double med = 0;
+        list.sort(Comparator.reverseOrder());
+        double med;
         if (list.size() % 2 == 0) {
             med = (double) (list.get((list.size() / 2) - 1) + list.get(((list.size() / 2)))) / (double) 2;
         } else med = list.get((list.size() + 1) / 2);
@@ -66,7 +66,6 @@ public class Task1 {
         for (short i : list) {
             sum += i;
         }
-        double avg = (double) sum / (double) list.size();
-        return avg;
+        return (double) sum / (double) list.size();
     }
 }

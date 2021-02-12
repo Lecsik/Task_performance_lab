@@ -10,16 +10,6 @@ import java.util.List;
 
 public class task4 {
 
-    private static class InterTime {
-        public final Date x;
-        public final Date y;
-
-        InterTime(Date x, Date y) {
-            this.x = x;
-            this.y = y;
-        }
-    }
-
     public static void main(String[] arg) throws IOException {
         Path path = Path.of(arg[0]);
         DateFormat format = new SimpleDateFormat("HH:mm");
@@ -40,8 +30,8 @@ public class task4 {
         //формирование массива заполнености банка в каждую минуту времени
         int[] clients = new int[12 * 60];
         for (InterTime inputTime : inputTimes) {
-            int a = toMinute(inputTime.x);
-            int b = toMinute(inputTime.y);
+            int a = toMinute(inputTime.start);
+            int b = toMinute(inputTime.end);
             for (int i = a; i < b; i++) {
                 clients[i] += 1;
             }
@@ -82,7 +72,17 @@ public class task4 {
 
         //вывод
         for (InterTime i : finalIntervalMaxClient) {
-            System.out.println(format.format(i.x) + " " + format.format(i.y));
+            System.out.println(format.format(i.start) + " " + format.format(i.end));
+        }
+    }
+
+    private static class InterTime {
+        public final Date start;
+        public final Date end;
+
+        InterTime(Date start, Date end) {
+            this.start = start;
+            this.end = end;
         }
     }
 

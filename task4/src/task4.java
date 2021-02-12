@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 public class task4 {
+
     private static class InterTime {
         public final Date x;
         public final Date y;
@@ -20,105 +21,98 @@ public class task4 {
     }
 
     public static void main(String[] arg) throws IOException {
-        Path path = Path.of("c:\\Users\\Lecsik\\Documents\\filesforexample\\time.txt");
+        Path path = Path.of(arg[0]);
         DateFormat format = new SimpleDateFormat("HH:mm");
-        if (Files.exists(path)) {
-            //заполнение листа строк из файла
-            List<String> inputTimeString = Files.readAllLines(path);
-            List<InterTime> inputTimeFinal = new ArrayList<>();
-            int[] clients = new int[1440];
-            ArrayList<Integer> maxCountCients;
+        //заполнение листа строк из файла
+        List<String> inputTimeString = Files.readAllLines(path);
 
-            ArrayList<InterTime> finalIntervalMaxClient = new ArrayList<>();
-            //заполнение листа inputTimeFinal из листа строк
-            for (String s : inputTimeString) {
-                String[] subStr;
-                String delimeter = " ";
-                subStr = s.split(delimeter);
-                try {
-                    inputTimeFinal.add(new InterTime(format.parse(subStr[0]), format.parse(subStr[1])));
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-            }
-            //формирование массива заполнености банка в каждую минуту времени
-            for (int i = 0; i < clients.length; i++) {
-                for (InterTime p : inputTimeFinal) {
-
-                    if (i >= toMinute(p.x) && i < toMinute(p.y))
-                        clients[i] += 1;
-                }
-            }
-            //Заполнение листа минут, в течении которых было максимальное количество посетителей
-            maxCountCients = maxInd(clients);
-
-            // выделение интервалов времени,  в течении которых было максимальное количество посетителей
-            int finalIntervalMaxClientFirst = maxCountCients.get(0);
-            int previous = finalIntervalMaxClientFirst;
-            for (int i = 1; i < maxCountCients.size(); i++) {
-                int current = maxCountCients.get(i);
-                if (current - previous > 1) {
-                    try {
-                        finalIntervalMaxClient.add(new InterTime(
-                                format.parse(toHours(finalIntervalMaxClientFirst)),
-                                format.parse(toHours(previous + 1))
-                        ));
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                    finalIntervalMaxClientFirst = current;
-                }
-
-                previous = current;
-
-            }
-
+        //заполнение листа inputTimes из листа строк
+        List<InterTime> inputTimes = new ArrayList<>();
+        for (String s : inputTimeString) {
+            String[] subStr = s.split(" ");
             try {
-                finalIntervalMaxClient.add(new InterTime(
-                        format.parse(toHours(finalIntervalMaxClientFirst)),
-                        format.parse(toHours(maxCountCients.get(maxCountCients.size() - 1) + 1))
-                ));
+                inputTimes.add(new InterTime(format.parse(subStr[0]), format.parse(subStr[1])));
             } catch (ParseException e) {
                 e.printStackTrace();
             }
+        }
 
-//вывод
-            for (InterTime i : finalIntervalMaxClient) {
-                System.out.println(format.format(i.x) + " " + format.format(i.y));
+        //формирование массива заполнености банка в каждую минуту времени
+        int[] clients = new int[12 * 60];
+        for (InterTime inputTime : inputTimes) {
+            int a = toMinute(inputTime.x);
+            int b = toMinute(inputTime.y);
+            for (int i = a; i < b; i++) {
+                clients[i] += 1;
+            }
+        }
+
+        //Заполнение листа минут, в течении которых было максимальное количество посетителей
+        ArrayList<Integer> maxCountCients = maxInd(clients);
+
+        // выделение интервалов времени,  в течении которых было максимальное количество посетителей
+        ArrayList<InterTime> finalIntervalMaxClient = new ArrayList<>();
+        int finalIntervalMaxClientFirst = maxCountCients.get(0);
+        int previous = finalIntervalMaxClientFirst;
+        for (int i = 1; i < maxCountCients.size(); i++) {
+            int current = maxCountCients.get(i);
+            if (current - previous > 1) {
+                try {
+                    finalIntervalMaxClient.add(new InterTime(
+                            format.parse(toHours(finalIntervalMaxClientFirst)),
+                            format.parse(toHours(previous + 1))
+                    ));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                finalIntervalMaxClientFirst = current;
             }
 
+            previous = current;
+        }
 
+        try {
+            finalIntervalMaxClient.add(new InterTime(
+                    format.parse(toHours(finalIntervalMaxClientFirst)),
+                    format.parse(toHours(maxCountCients.get(maxCountCients.size() - 1) + 1))
+            ));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        //вывод
+        for (InterTime i : finalIntervalMaxClient) {
+            System.out.println(format.format(i.x) + " " + format.format(i.y));
         }
     }
 
     public static int toMinute(Date HandM) {
         DateFormat formatH = new SimpleDateFormat("HH");
         DateFormat formatm = new SimpleDateFormat("mm");
-        return Integer.parseInt(formatH.format(HandM)) * 60 + Integer.parseInt(formatm.format(HandM));
+        return Integer.parseInt(formatH.format(HandM)) * 60 + Integer.parseInt(formatm.format(HandM)) - 8 * 60;
     }
 
     public static String toHours(int m) {
+        m += 8 * 60;
         long
                 hour = m / 60,
                 min = m % 60;
         return String.format("%02d:%02d", hour, min);
-
     }
 
     public static ArrayList<Integer> maxInd(int[] a) {
         int max = 0;
-        ArrayList<Integer> maxIndex = new ArrayList<>();
         for (int value : a) {
             if (value > max) {
                 max = value;
             }
         }
+
+        ArrayList<Integer> maxIndex = new ArrayList<>();
         for (int i = 0; i < a.length; i++) {
             if (a[i] == max)
                 maxIndex.add(i);
         }
         return maxIndex;
     }
-
-
 }

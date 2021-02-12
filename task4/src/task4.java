@@ -86,13 +86,13 @@ public class task4 {
         }
     }
 
-    public static int toMinute(Date HandM) {
+    private static int toMinute(Date HandM) {
         DateFormat formatH = new SimpleDateFormat("HH");
         DateFormat formatm = new SimpleDateFormat("mm");
         return Integer.parseInt(formatH.format(HandM)) * 60 + Integer.parseInt(formatm.format(HandM)) - 8 * 60;
     }
 
-    public static String toHours(int m) {
+    private static String toHours(int m) {
         m += 8 * 60;
         long
                 hour = m / 60,
@@ -100,7 +100,7 @@ public class task4 {
         return String.format("%02d:%02d", hour, min);
     }
 
-    public static ArrayList<Integer> maxInd(int[] a) {
+    private static ArrayList<Integer> maxInd(int[] a) {
         int max = 0;
         for (int value : a) {
             if (value > max) {

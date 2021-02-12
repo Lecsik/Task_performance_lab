@@ -40,7 +40,7 @@ public class task2 {
     }
 
 
-    public static int pointPlace(Point point, List<Point> polygon) {
+    private static int pointPlace(Point point, List<Point> polygon) {
         for (Point value : polygon) {
             if (point.x == value.x && point.y == value.y) return 0;
         }

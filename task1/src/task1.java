@@ -5,8 +5,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-
-public class Task1 {
+public class task1 {
 
     public static void main(String[] arg) throws IOException {
         Path path = Path.of("c:\\Users\\Lecsik\\Documents\\filesforexample\\readme.txt");

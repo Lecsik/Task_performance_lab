@@ -8,18 +8,17 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+public class task4 {
+    private static class InterTime {
+        public final Date x;
+        public final Date y;
 
-class InterTime {
-    public final Date x;
-    public final Date y;
-
-    InterTime(Date x, Date y) {
-        this.x = x;
-        this.y = y;
+        InterTime(Date x, Date y) {
+            this.x = x;
+            this.y = y;
+        }
     }
-}
 
-public class Task4 {
     public static void main(String[] arg) throws IOException {
         Path path = Path.of("c:\\Users\\Lecsik\\Documents\\filesforexample\\time.txt");
         DateFormat format = new SimpleDateFormat("HH:mm");

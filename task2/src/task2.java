@@ -4,18 +4,17 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
+public class task2 {
+    private static class Point {
+        public final float x;
+        public final float y;
 
-class Point {
-    public final float x;
-    public final float y;
-
-    Point(float x, float y) {
-        this.x = x;
-        this.y = y;
+        Point(float x, float y) {
+            this.x = x;
+            this.y = y;
+        }
     }
-}
 
-public class Task2 {
     public static void main(String[] arg) throws IOException {
         Path path1 = Path.of("c:\\Users\\Lecsik\\Documents\\filesforexample\\poligon.txt");
         Path path2 = Path.of("c:\\Users\\Lecsik\\Documents\\filesforexample\\readme2.txt");

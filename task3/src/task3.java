@@ -4,8 +4,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-
-public class Task3 {
+public class task3 {
     public static void main(String[] arg) throws IOException {
         Path path1 = Path.of("c:\\Users\\Lecsik\\Documents\\filesforexample\\Cash1.txt");
         Path path2 = Path.of("c:\\Users\\Lecsik\\Documents\\filesforexample\\Cash2.txt");

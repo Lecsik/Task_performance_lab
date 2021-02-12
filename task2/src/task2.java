@@ -1,6 +1,7 @@
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,8 +18,8 @@ public class task2 {
     }
 
     public static void main(String[] arg) throws IOException {
-        Path polygonPath = Path.of(arg[0]);
-        Path pointPath = Path.of(arg[1]);
+        Path polygonPath = Paths.get(arg[0]);
+        Path pointPath = Paths.get(arg[1]);
 
         List<String> polygonString = Files.readAllLines(polygonPath);
         List<String> pointsStrings = Files.readAllLines(pointPath);

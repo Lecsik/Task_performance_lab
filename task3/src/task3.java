@@ -1,17 +1,18 @@
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
 public class task3 {
 
     public static void main(String[] arg) throws IOException {
-        Path path1 = Path.of(arg[0]);
-        Path path2 = Path.of(arg[1]);
-        Path path3 = Path.of(arg[2]);
-        Path path4 = Path.of(arg[3]);
-        Path path5 = Path.of(arg[4]);
+        Path path1 = Paths.get(arg[0]);
+        Path path2 = Paths.get(arg[1]);
+        Path path3 = Paths.get(arg[2]);
+        Path path4 = Paths.get(arg[3]);
+        Path path5 = Paths.get(arg[4]);
 
         List<String> strings1 = Files.readAllLines(path1);
         List<String> strings2 = Files.readAllLines(path2);

@@ -1,6 +1,7 @@
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -11,7 +12,7 @@ import java.util.List;
 public class task4 {
 
     public static void main(String[] arg) throws IOException {
-        Path path = Path.of(arg[0]);
+        Path path = Paths.get(arg[0]);
         DateFormat format = new SimpleDateFormat("HH:mm");
         //заполнение листа строк из файла
         List<String> inputTimeString = Files.readAllLines(path);
